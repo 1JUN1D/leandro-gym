@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index con animación</title>
+  <style>
+    /* Estilo general del body con fondo degradado */
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Opciones de degradado:
+         1. Degradado lineal (activo por defecto):
+         background: linear-gradient(white, #06A355);
+         
+         2. Degradado radial:
+         background: radial-gradient(circle, white, #06A355);
+         
+         3. Degradado cónico:
+         background: conic-gradient(white, #06A355);
+      */
+      background: radial-gradient(circle, white, #06A355);
+      font-family: Arial, sans-serif;
+    }
+    
+    /* Tarjeta central responsive */
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      max-width: 90%;
+      width: 350px;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .card button {
+      background: #06A355;
+      color: white;
+      border: none;
+      padding: 15px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .card button:hover {
+      background: #059947; /* Verde un poco más oscuro en hover */
+    }
+    
+    /* Animación de aparición para la tarjeta */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    /* Overlay para efecto de transición al redirigir */
+    #transition-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #06A355;
+      opacity: 0;
+      z-index: 1000;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    
+    /* Clase activa que muestra el overlay */
+    #transition-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    /* Adaptación para móviles */
+    @media (max-width: 400px) {
+      .card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Overlay para la transición -->
+  <div id="transition-overlay"></div>
+  
+  <!-- Tarjeta central -->
+  <div class="card">
+    <!-- Imagen ubicada en la raíz del proyecto -->
+    <img src="logo-leandrogym.png" alt="Logo Leandro Gym">
+    <!-- Botón con redirección y efecto de transición -->
+    <a href="./index copy.html">
+        <button>Sede Poblado Campestre</button>
+      </a>      
+  </div>
+  
+  <script>
+    // Función para manejar la transición y redirección
+    document.getElementById('redirect-btn').addEventListener('click', function() {
+      // Activa el overlay de transición
+      document.getElementById('transition-overlay').classList.add('active');
+      // Después de 0.5 segundos (duración de la transición), redirige a la nueva URL
+      setTimeout(function(){
+        window.location.href = 'tu-archivo.html'; // Reemplaza 'tu-archivo.html' con la URL deseada
+      }, 500);
+    });
+  </script>
+</body>
+</html>
