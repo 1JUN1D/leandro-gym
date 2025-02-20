@@ -129,11 +129,10 @@
         <div class="restaurantemadre">
             <div id="viewer360">
                 <div class="whatsapp-btn" style="display: flex; justify-content: center; align-items: center;">
-                    <button onclick="window.location.href='https://wa.me/tuNumero'">
+                    <button id="whatsapp-button">
                       WhatsApp <i class="bx bxl-whatsapp bx-tada" style="font-size: 20px;"></i>
                     </button>
-                  </div>
-                  
+                  </div>                  
             </div>
             <div class="side-panel2">
                 <div class="logo-container2">
@@ -197,6 +196,34 @@
         window.open(url, '_blank').focus();
     }
 </script>
+<script>
+    const whatsappButton = document.getElementById('whatsapp-button');
+  
+    whatsappButton.addEventListener('click', function(e) {
+      e.preventDefault(); // Evita el comportamiento por defecto
+  
+      // Función de redirección a WhatsApp
+      function redirigir() {
+        window.location.href = 'https://wa.link/idb8qx'; // Sustituye 'tuNumero' por el número deseado
+      }
+  
+      // Verifica si gtag está disponible y envía el evento
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': 'Contacto',
+          'event_label': 'WhatsApp Sede Poblado Campestre Leandro GYM',
+          'event_callback': redirigir
+        });
+      } else {
+        // Si gtag no está disponible, redirige inmediatamente
+        redirigir();
+      }
+  
+      // Fallback en caso de que el callback no se dispare en un tiempo razonable
+      setTimeout(redirigir, 1000);
+    });
+  </script>
+  
     <script type="importmap">
         {
             "imports": {
