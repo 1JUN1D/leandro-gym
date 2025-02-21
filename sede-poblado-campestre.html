@@ -84,6 +84,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/gallery-plugin/index.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/plan-plugin/index.css" />
+    <!-- Añade esta línea junto con tus otros CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/visible-range-plugin/index.css" />
     <link rel="stylesheet" href="../styles.css">
     <!-- Leaflet CSS para el plugin de mapa -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -127,10 +129,16 @@
         </div>
         <div class="restaurantemadre">
             <div id="viewer360">
+                <div class="niveles">
+                    <p style="text-align: center; padding-left: 2px; padding-right: 2px; margin: 0; color: white;">Selecciona<br>el piso</p>
+                    <button id="btn-piso-1" class="nivel-boton activo" title="Primer Piso" onclick="changeFloor(1)">1</button>
+                    <button id="btn-piso-2" class="nivel-boton" title="Segundo Piso" onclick="changeFloor(2)">2</button>
+                </div>
                 <div class="whatsapp-btn" style="display: flex; justify-content: center; align-items: center;">
                     <button id="whatsapp-button">
                       WhatsApp <i class="bx bxl-whatsapp bx-tada" style="font-size: 20px;"></i>
                     </button>
+
                   </div>                  
             </div>
             <div class="side-panel2">
@@ -232,28 +240,32 @@
                 "@photo-sphere-viewer/markers-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.module.js",
                 "@photo-sphere-viewer/gallery-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/gallery-plugin/index.module.js",
                 "@photo-sphere-viewer/plan-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/plan-plugin/index.module.js",
+                "@photo-sphere-viewer/visible-range-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/visible-range-plugin/index.module.js",
+                "@photo-sphere-viewer/autorotate-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/autorotate-plugin/index.module.js",
                 "leaflet": "https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.esm.js"
             }
         }
     </script>
-
     <script type="module">
         import { Viewer } from '@photo-sphere-viewer/core';
         import { VirtualTourPlugin } from '@photo-sphere-viewer/virtual-tour-plugin';
         import { GalleryPlugin } from '@photo-sphere-viewer/gallery-plugin';
         import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
+        import { VisibleRangePlugin } from '@photo-sphere-viewer/visible-range-plugin';
         import * as PlanPlugin from '@photo-sphere-viewer/plan-plugin';
+        import { AutorotatePlugin } from '@photo-sphere-viewer/autorotate-plugin';
+
     
-        const baseUrl = '../fotos/';
+        const baseUrl = '../fotos_comprimidas/';
     
         const pisos = {
             1: [
                 {
                     id: 'nodo1',
-                    panorama: `${baseUrl}1.jpg`,
-                    thumbnail: `${baseUrl}1.jpg`,
+                    panorama: `${baseUrl}entrada-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}entrada-leandro-gym.jpg`,
                     name: 'Entrada',
-                    caption: 'Entrada Imperial Box, Box de CrossFit en Cali.',
+                    caption: 'Entrada Leandro GYM, Gym y Box de CrossFit.',
                     links: [{ nodeId: 'nodo2', position:  { yaw: 2.694422182153191, pitch: -0.16768181434260354 } },
                         
                     ],
@@ -261,74 +273,438 @@
                 },
                 {
                     id: 'nodo2',
-                    panorama: `${baseUrl}2.jpg`,
-                    thumbnail: `${baseUrl}2.jpg`,
-                    name: 'Box',
-                    caption: 'Box de CrossFit en Cali',
+                    panorama: `${baseUrl}recepcion-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}recepcion-leandro-gym.jpg`,
+                    name: 'Recepcion',
+                    caption: 'Recepcion Leandro GYM, Gym y Box de CrossFit.',
                     links: [
-                    { nodeId: 'nodo1', position: {yaw: 4.92648814328491, pitch: -0.21213392089952388} },
-                    { nodeId: 'nodo3', position: {yaw: 2.6902199664010285, pitch: -0.08918145131232524} },
-                    { nodeId: 'nodo6', position: {yaw: 3.6687863157837333, pitch: -0.09050844237427658} },
 
+                    { nodeId: 'nodo3', position: {yaw: 4.92648814328491, pitch: -0.21213392089952388} },
                         
                     ],
-                    sphereCorrection: { pan: '202deg' },
+                    sphereCorrection: { pan: '310deg' },
                 },
                 {
                     id: 'nodo3',
-                    panorama: `${baseUrl}3.jpg`,
-                    thumbnail: `${baseUrl}3.jpg`,
-                    name: 'Box',
-                    caption: 'Box de CrossFit en Cali',
+                    panorama: `${baseUrl}torniquete-1-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}torniquete-1-leandro-gym.jpg`,
+                    name: 'Recepcion',
+                    caption: 'Recepcion Leandro GYM, Gym y Box de CrossFit.',
                     links: [
-
-                    { nodeId: 'nodo2', position: {yaw: 4.725774370357396, pitch: -0.16193415899636854} },
-                    { nodeId: 'nodo4', position: {yaw: 1.588683976591966, pitch: -0.26991994801714503} },
-                    { nodeId: 'nodo6', position: {yaw: 3.125770225603863, pitch: -0.2034539523025578} },
+    
+                    { nodeId: 'nodo2', position: {yaw: 1.9813560179925918, pitch: -0.3873327435276024} },
+{ nodeId: 'nodo4', position: {yaw: 3.36415337668283, pitch: -0.12068346376566286} },
+{ nodeId: 'nodo5', position: {yaw: 4.243466560779369, pitch: -0.05567494944090967} },
+{ nodeId: 'nodo7', position: {yaw: 0.21497991080223597, pitch: -0.04425710195123722} },
                         
                     ],
-                    sphereCorrection: { pan: '-70deg' },
+                    sphereCorrection: { pan: '0deg' },
                 },
                 {
                     id: 'nodo4',
-                    panorama: `${baseUrl}4.jpg`,
-                    thumbnail: `${baseUrl}4.jpg`,
-                    name: 'Box',
-                    caption: 'Box de CrossFit en Cali',
+                    panorama: `${baseUrl}tienda-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}tienda-leandro-gym.jpg`,
+                    name: 'Tienda',
+                    caption: 'Tienda Leandro GYM, Gym y Box de CrossFit.',
                     links: [
-                    { nodeId: 'nodo2', position: {yaw: 3.6775290545982293, pitch: -0.06152577296300965}},
-                    { nodeId: 'nodo3', position: {yaw: 4.275418904479196, pitch: -0.1321440848761446}},
-                    { nodeId: 'nodo5', position: {yaw: 5.925112607618152, pitch: -0.10196765846042322}},
-                    { nodeId: 'nodo6', position: {yaw: 2.900123671432673, pitch: -0.1987928586967449}},
+                    { nodeId: 'nodo3', position: {yaw: 0.934020032449617, pitch: -0.30942786965696145} },
+
                     ],
                     sphereCorrection: { pan: '240deg' }
                 },
                 {
                     id: 'nodo5',
-                    panorama: `${baseUrl}5.jpg`,
-                    thumbnail: `${baseUrl}5.jpg`,
-                    name: 'Box',
-                    caption: 'Box de CrossFit en Cali',
+                    panorama: `${baseUrl}bano-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}bano-leandro-gym.jpg`,
+                    name: 'Baño',
+                    caption: 'Baño Leandro GYM, Gym y Box de CrossFit.',
                     links: [
-                    { nodeId: 'nodo3', position: {yaw: 4.966296360816546, pitch: -0.21915948958583487} },
-                    { nodeId: 'nodo4', position: {yaw: 4.002364262697251, pitch: -0.24499473914945247} },
+                    { nodeId: 'nodo3', position: {yaw: 1.2786735562911944, pitch: -0.25785734787479253} },
+{ nodeId: 'nodo6', position: {yaw: 4.468253809524504, pitch: -0.3057390244571456} },
+                        
+                    ],
+                    sphereCorrection: { pan: '100deg' }
+                },
+                {
+                    id: 'nodo6',
+                    panorama: `${baseUrl}bano-2-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}bano-2-leandro-gym.jpg`,
+                    name: 'Baño',
+                    caption: 'Baño Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo5', position: {yaw: 3.1625423019103263, pitch: -0.2673366875292498} },
                         
                     ],
                     sphereCorrection: { pan: '0deg' }
                 },
                 {
-                    id: 'nodo6',
-                    panorama: `${baseUrl}31.jpg`,
-                    thumbnail: `${baseUrl}31.jpg`,
-                    name: 'Box',
-                    caption: 'Box de CrossFit en Cali',
+                    id: 'nodo7',
+                    panorama: `${baseUrl}gimnasio-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}gimnasio-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
                     links: [
-                    { nodeId: 'nodo2', position: {yaw: 1.0368782348463244, pitch: -0.20011192160656233} },
-                    { nodeId: 'nodo3', position: {yaw: 2.5166882735632177, pitch: -0.1753851762997467} },
-                    { nodeId: 'nodo4', position: {yaw: 3.456559573310134, pitch: -0.06663955173081826} },
+                    { nodeId: 'nodo3', position: {yaw: 3.281575843503689, pitch: 0.023924626320644737} },
+                    { nodeId: 'nodo8', position: {yaw: 4.400414148008802, pitch: -0.303285856639147} },
+                    { nodeId: 'nodo12', position: {yaw: 4.929062797751741, pitch: -0.06497770603815223}
+                },
+                { nodeId: 'nodo28', position: {yaw: 0.18794133614132894, pitch: -0.012320952688864573} },
+                    ],
+                    sphereCorrection: { pan: '170deg' }
+                },
+                {
+                    id: 'nodo8',
+                    panorama: `${baseUrl}box-crossfit-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}box-crossfit-leandro-gym.jpg`,
+                    name: 'Box de Crossfit',
+                    caption: 'Box de Crossfit Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo7', position: {yaw: 2.3574414177472134, pitch: -0.24376156130494264} },
+                    { nodeId: 'nodo9', position: {yaw: 4.400414148008802, pitch: -0.303285856639147} },
+                    { nodeId: 'nodo10', position: {yaw: 5.57298437648771, pitch: -0.21375653029770048} },
+                    { nodeId: 'nodo11', position: {yaw: 0.030565738169231197, pitch: -0.12651314251652845} },
                         
                     ],
-                    sphereCorrection: { pan: '240deg' }
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo9',
+                    panorama: `${baseUrl}box-crossfit-2-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}box-crossfit-2-leandro-gym.jpg`,
+                    name: 'Box de Crossfit',
+                    caption: 'Box de Crossfit Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo8', position: {yaw: 6.06875602467835, pitch: -0.1525236343673999} },
+                    { nodeId: 'nodo10', position: 
+{yaw: 4.688092377023737, pitch: -0.17811446026881983} },
+                    { nodeId: 'nodo11', position: {yaw: 5.35698648304464, pitch: -0.06050317928699078} },
+                        
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo10',
+                    panorama: `${baseUrl}box-crossfit-3-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}box-crossfit-3-leandro-gym.jpg`,
+                    name: 'Box de Crossfit',
+                    caption: 'Box de Crossfit Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo8', position: {yaw: 5.4277648186303855, pitch: -0.0925771039913248} },
+                    { nodeId: 'nodo9', position: {yaw: 0.04020098287928999, pitch: -0.1367822556480367} },
+                    { nodeId: 'nodo11', position: {yaw: 4.52786655941422, pitch: -0.16970324835069173} },
+                        
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo11',
+                    panorama: `${baseUrl}box-crossfit-4-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}box-crossfit-4-leandro-gym.jpg`,
+                    name: 'Box de Crossfit',
+                    caption: 'Box de Crossfit Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo8', position: {yaw: 6.117462383718428, pitch: -0.05010179580371643} },
+                    { nodeId: 'nodo9', position: {yaw: 0.5407842315973537, pitch: -0.06245204215094713} },
+                    { nodeId: 'nodo10', position: {yaw: 1.242956428544651, pitch: -0.09383295072150322} },
+                        
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo12',
+                    panorama: `${baseUrl}pasillo-1-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}pasillo-1-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo13', position: {yaw: 3.422433458373968, pitch: -0.30238924784367116} },
+{ nodeId: 'nodo7', position: {yaw: 0.36400496142591526, pitch: -0.3620556207621308} },
+{ nodeId: 'nodo26', position: {yaw: 4.929062797751741, pitch: -0.06497770603815223} },
+
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+{
+                    id: 'nodo13',
+                    panorama: `${baseUrl}pasillo-2-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}pasillo-2-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo12', position: {yaw: 4.850749864013708, pitch: -0.23683156577707587} },  
+                    { nodeId: 'nodo14', position: {yaw: 1.7010185978757606, pitch: -0.2848882901222911} },
+                    { nodeId: 'nodo23', position: {yaw: 3.2363220135173605, pitch: -0.10988710371205634} },          
+                    ],
+                    sphereCorrection: { pan: '175deg' }
+                },
+{
+                    id: 'nodo14',
+                    panorama: `${baseUrl}pasillo-3-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}pasillo-3-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo13', position: {yaw: 2.9277045580285903, pitch: -0.26092992686755645} },
+                    { nodeId: 'nodo15', position: {yaw: 6.117462383718428, pitch: -0.05010179580371643} },
+                    { nodeId: 'nodo22', position: {yaw: 1.455031862713234, pitch: -0.23690108778072316} },           
+                    ],
+                    sphereCorrection: { pan: '270deg' }
+                },
+{
+                    id: 'nodo15',
+                    panorama: `${baseUrl}pasillo-4-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}pasillo-4-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo14', position: {yaw: 1.6157128899755284, pitch: -0.47227585928655813} },  
+                    { nodeId: 'nodo16', position: {yaw: 4.6354086928476725, pitch: -0.37330023658066125} },
+                    { nodeId: 'nodo20', position: {yaw: 6.208777983407247, pitch: -0.06052749378507638} }, 
+            
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+{
+                    id: 'nodo16',
+                    panorama: `${baseUrl}pasillo-5-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}pasillo-5-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo15', position: {yaw: 1.4262271647557057, pitch: -0.36268888053867965} }, 
+                    { nodeId: 'nodo17', position: {yaw: 6.19453710174499, pitch: -0.11072395311571803} },          
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo17',
+                    panorama: `${baseUrl}linea-final-1-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}linea-final-1-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo16', position: {yaw: 3.3326748639200914, pitch: -0.17211831959500756} },
+                    { nodeId: 'nodo18', position: {yaw: 0.20681169593589296, pitch: -0.11824009119835699} },              
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+{
+                    id: 'nodo18',
+                    panorama: `${baseUrl}linea-final-2-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}linea-final-2-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo17', position: {yaw: 3.3961907535077844, pitch: -0.11550288891460658} },
+                    { nodeId: 'nodo19', position: {yaw: 0.14788771917763738, pitch: -0.19680820621604056} },           
+                    ],
+                    sphereCorrection: { pan: '180deg' }
+                },
+{
+                    id: 'nodo19',
+                    panorama: `${baseUrl}linea-final-3-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}linea-final-3-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo25', position: {yaw: 1.7216065275469783, pitch: -0.02146938367903184} },
+{ nodeId: 'nodo18', position: {yaw: 3.532497390305654, pitch: 0.03180346393014766} },
+{ nodeId: 'nodo21', position: {yaw: 2.8686894073222957, pitch: 0.024557682328781638} },
+{ nodeId: 'nodo32', position: {yaw: 0.24955719529624804, pitch: 0.1253983980597666} },
+                    ],
+                    sphereCorrection: { pan: '180deg' }
+                },
+                {
+                    id: 'nodo20',
+                    panorama: `${baseUrl}cuarta-linea-1-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}cuarta-linea-1-leandrogym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo15', position: {yaw: 3.3961907535077844, pitch: -0.11550288891460658} },
+                    { nodeId: 'nodo21', position: {yaw: 6.208777983407247, pitch: -0.06052749378507638} },           
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+{
+                    id: 'nodo21',
+                    panorama: `${baseUrl}cuarta-linea-2-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}cuarta-linea-2-leandrogym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo19', position: {yaw: 6.1670480699143795, pitch: -0.09827292054214531} },
+                    { nodeId: 'nodo20', position: {yaw: 3.102877069355271, pitch: -0.17485204356579276}}, 
+         
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo22',
+                    panorama: `${baseUrl}tercera-linea-1-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}tercera-linea-1-leandrogym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo19', position: {yaw: 1.4262271647557057, pitch: -0.36268888053867965} },
+         
+                    ],
+                    sphereCorrection: { pan: '270deg' }
+                },
+                {
+                    id: 'nodo23',
+                    panorama: `${baseUrl}linea-verde-1-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}linea-verde-1-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo13', position: {yaw: 0.04020424760447588, pitch: -0.10153072365398819} },
+                    { nodeId: 'nodo24', position: {yaw: 3.2363220135173605, pitch: -0.10988710371205634} },
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+{
+                    id: 'nodo24',
+                    panorama: `${baseUrl}linea-verde-2-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}linea-verde-2-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo23', position: {yaw: 0.04020424760447588, pitch: -0.10153072365398819} },
+                    { nodeId: 'nodo25', position: {yaw: 3.2363220135173605, pitch: -0.10988710371205634} },
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+{
+                    id: 'nodo25',
+                    panorama: `${baseUrl}linea-verde-3-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}linea-verde-3-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo24', position: {yaw: 0.08295242508564933, pitch: -0.08435990395261683} },
+{ nodeId: 'nodo19', position: {yaw: 1.5923800302877757, pitch: -0.025728063636587084} },
+{ nodeId: 'nodo31', position: {yaw: 3.200278329485294, pitch: -0.00783651156482934} },
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo26',
+                    panorama: `${baseUrl}segunda-linea-1-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}segunda-linea-1-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo12', position: {yaw: 1.4397619685382974, pitch: 0.03123933429632819} },
+         { nodeId: 'nodo27', position: {yaw: 4.489905596651924, pitch: -0.029839923616509445} },
+                    ],
+                    sphereCorrection: { pan: '270deg' }
+                },
+{
+                    id: 'nodo27',
+                    panorama: `${baseUrl}segunda-linea-2-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}segunda-linea-2-leandro-gym.jpg`,
+                    name: 'Gimnasio2',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+         { nodeId: 'nodo26', position: {yaw: 2.0362308064217203, pitch: 0.05226287468647328} },
+         { nodeId: 'nodo31', position: {yaw: 5.0799469798698125, pitch: 0.07527663328261802}},
+
+                    ],
+                    sphereCorrection: { pan: '250deg' }
+                },
+                {
+                    id: 'nodo28',
+                    panorama: `${baseUrl}primera-linea-1-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}primera-linea-1-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+         { nodeId: 'nodo11', position: {yaw: 2.856783937296949, pitch: 0.05338001734226294} },
+         { nodeId: 'nodo29', position: {yaw: 5.812772355451662, pitch: 0.0012152748567233473} },
+                    ],
+                    sphereCorrection: { pan: '200deg' }
+                },
+                {
+                    id: 'nodo29',
+                    panorama: `${baseUrl}linea-0-leandro-gym.jpg`,
+                    thumbnail: `${baseUrl}linea-0-leandro-gym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+         { nodeId: 'nodo28', position: {yaw: 3.0760426319543406, pitch: 0.09652406956790349} },
+         { nodeId: 'nodo30', position: {yaw: 6.0944329873632315, pitch: 0.1677541695561806} },
+                    ],
+                    sphereCorrection: { pan: '180deg' }
+                },
+                {
+                    id: 'nodo30',
+                    panorama: `${baseUrl}esquina-2-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}esquina-2-leandrogym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo29', position: {yaw: 3.421765255952447, pitch: -0.06584554213959981} },
+                    { nodeId: 'nodo31', position: {yaw: 4.824755057926116, pitch: 0.02028279568427438} },
+                    ],
+                    sphereCorrection: { pan: '180deg' }
+                },
+
+{
+                    id: 'nodo31',
+                    panorama: `${baseUrl}esquina-1-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}esquina-1-leandrogym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo19', position: {yaw: 3.8212326607939393, pitch: -0.07043322244306971} },
+{ nodeId: 'nodo25', position: {yaw: 3.26445369973184, pitch: -0.012671086492740624} },
+{ nodeId: 'nodo27', position: {yaw: 2.3006527618928505, pitch: -0.09429779926226445} },
+{ nodeId: 'nodo30', position: {yaw: 1.368483670406022, pitch: -0.021460121407137045} },
+{ nodeId: 'nodo32', position: {yaw: 4.975741818661046, pitch: -0.11051961162564972} },
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+                {
+                    id: 'nodo32',
+                    panorama: `${baseUrl}esquina-3-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}esquina-3-leandrogym.jpg`,
+                    name: 'Gimnasio',
+                    caption: 'Gimnasio Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo31', position: {yaw: 4.663192149619467, pitch: 0.033070092651191096} },
+                    ],
+                    sphereCorrection: { pan: '0deg' }
+                },
+
+
+            ],
+            2: [
+                
+                {
+                    id: 'nodo33',
+                    panorama: `${baseUrl}segundo-piso-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}segundo-piso-leandrogym.jpg`,
+                    name: 'Sala de Capacitacion',
+                    caption: 'Leandro GYM, Gym y Box de CrossFit.',
+                    links: [
+                    { nodeId: 'nodo34', position: {yaw: 2.5768218238880656, pitch: -0.12653744684352564} },                  
+                    ],
+                    sphereCorrection: { pan: '180deg', }
+                },
+                {
+                    id: 'nodo34',
+                    panorama: `${baseUrl}segundo-piso-2-leandrogym.jpg`,
+                    thumbnail: `${baseUrl}segundo-piso-2-leandrogym.jpg`,
+                    name: 'ala de Capacitacion',
+                    caption: 'Leandro GYM, Gym y Box de CrossFit.',
+                    links: [{
+                                nodeId: 'nodo33',
+                                position:{yaw: 2.5768218238880656, pitch: -0.12653744684352564}
+                                ,
+                            },
+                            ],
+                    sphereCorrection: { pan: '0deg', }
                 },
             ],
         };
@@ -345,7 +721,7 @@
             mousemoveSensitivity: 2, // Aumenta la sensibilidad del mouse (default es 1)
             touchmoveSensitivity: 2, // Aumenta la sensibilidad del touch (default es 1)
             defaultZoomLvl: 0,
-
+    
             plugins: [
                 MarkersPlugin,
                 [
@@ -368,7 +744,7 @@
                     {
                         defaultZoom: 17,
                         bearing: '200deg',
-                        coordinates: [-76.52833826191736,3.4597820763070835],
+                        coordinates: [-76.45747098650658,3.4170040232179617],
                         layers: [
                             {
                                 name: 'OpenStreetMap',
@@ -379,68 +755,101 @@
                         visibleOnLoad: false,
                     },
                 ],
+                [
+                    VisibleRangePlugin,
+                    {
+                        // Configuración inicial vacía
+                    }
+                ],
             ],
         });
     
         window.changeFloor = function (floor) {
-    if (floor === currentFloor) return; // Si el piso ya está seleccionado, no hacer nada
-
-    currentFloor = floor;
-
-    // Obtener el plugin VirtualTourPlugin
-    const vtPlugin = viewer.getPlugin(VirtualTourPlugin);
-
-    // Cambiar los nodos al conjunto del nuevo piso
-    vtPlugin.setNodes(pisos[floor]); // Actualiza los nodos del visor al nuevo piso
-
-    // Cambiar al primer nodo del nuevo piso
-    vtPlugin.setCurrentNode(pisos[floor][0].id); // Establece el primer nodo del piso seleccionado
-
-    // Actualizar la clase 'activo' en los botones
-    document.querySelectorAll('.nivel-boton').forEach((btn, index) => {
-        if (index + 1 === floor) {
-            btn.classList.add('activo'); // Agregar la clase activo al botón seleccionado
-        } else {
-            btn.classList.remove('activo'); // Eliminar la clase activo de los demás botones
-        }
-    });
-};
-
-
-
-
+            if (floor === currentFloor) return; // Si el piso ya está seleccionado, no hacer nada
+    
+            currentFloor = floor;
+    
+            // Obtener el plugin VirtualTourPlugin
+            const vtPlugin = viewer.getPlugin(VirtualTourPlugin);
+    
+            // Cambiar los nodos al conjunto del nuevo piso
+            vtPlugin.setNodes(pisos[floor]); // Actualiza los nodos del visor al nuevo piso
+    
+            // Cambiar al primer nodo del nuevo piso
+            vtPlugin.setCurrentNode(pisos[floor][0].id); // Establece el primer nodo del piso seleccionado
+    
+            // Actualizar la clase 'activo' en los botones
+            document.querySelectorAll('.nivel-boton').forEach((btn, index) => {
+                if (index + 1 === floor) {
+                    btn.classList.add('activo'); // Agregar la clase activo al botón seleccionado
+                } else {
+                    btn.classList.remove('activo'); // Eliminar la clase activo de los demás botones
+                }
+            });
+        };
+    
     viewer.addEventListener('ready', () => {
         console.log('The viewer is ready');
+        
+        const vtPlugin = viewer.getPlugin(VirtualTourPlugin);
+        const rangePlugin = viewer.getPlugin(VisibleRangePlugin);
+        
+        // Importante: Aplicar las restricciones inmediatamente para el nodo inicial
+        if (vtPlugin.getCurrentNode() === 'nodo1') {
+            console.log('Aplicando restricción en nodo1 (inicio)');
+            // Usar valores en RADIANES en lugar de grados para mayor compatibilidad
+            rangePlugin.setHorizontalRange([0, Math.PI]); // 0 a 180 grados en radianes
+        }
+        
+        // Escuchar cambios de nodo
+        vtPlugin.addEventListener('node-changed', (e) => {
+    console.log('Nodo cambiado a:', e.node.id);
+    if (e.node.id === 'nodo1') {
+        rangePlugin.setHorizontalRange([15 * Math.PI / 180, 200 * Math.PI / 180]);
+    } else {
+        rangePlugin.setHorizontalRange(null);
+    }
+});
     });
 
-          // Evento de clic: imprime yaw/pitch del clic
-          viewer.addEventListener('ready', () => {
-      console.log('The viewer is ready');
+    // SEGUNDA SOLUCIÓN - USAR LA CONFIGURACIÓN DESPUÉS DEL PRIMER RETRASO
+    setTimeout(() => {
+        const vtPlugin = viewer.getPlugin(VirtualTourPlugin);
+        const rangePlugin = viewer.getPlugin(VisibleRangePlugin);
+        
+        // Si estamos en nodo1, aplicar restricción
+        if (vtPlugin && vtPlugin.getCurrentNode() === 'nodo1' && rangePlugin) {
+            console.log('Aplicando restricción después del timeout');
+            rangePlugin.setHorizontalRange([0, Math.PI]); // En radianes
+        }
+    }, 1000); // Esperar 1 segundo después de cargar
 
-      // Obtenemos el plugin
-      const vtPlugin = viewer.getPlugin(VirtualTourPlugin.VirtualTourPlugin);
+    // Mantener el resto de los event listeners sin cambios
+    viewer.addEventListener('ready', () => {
+        console.log('The viewer is ready');
 
-      // Log de la posición cada 2 segundos
-      setInterval(() => {
-        const position = viewer.getPosition();
-        console.log('Current Position:', {
-          yaw: position.yaw,
-          pitch: position.pitch
+        // Obtenemos el plugin
+        const vtPlugin = viewer.getPlugin(VirtualTourPlugin.VirtualTourPlugin);
+
+        // Log de la posición cada 2 segundos
+        setInterval(() => {
+          const position = viewer.getPosition();
+          console.log('Current Position:', {
+            yaw: position.yaw,
+            pitch: position.pitch
+          });
+      
+        }, 2000);
+
+        // Evento de clic: imprime yaw/pitch del clic
+        viewer.addEventListener('click', (e) => {
+          console.log('Click Coordinates:', { 
+            yaw: e.yaw, 
+            pitch: e.pitch 
+          });
         });
-    
-      }, 2000);
-
-      // Evento de clic: imprime yaw/pitch del clic
-      viewer.addEventListener('click', (e) => {
-        console.log('Click Coordinates:', { 
-          yaw: e.yaw, 
-          pitch: e.pitch 
-        });
-      });
     });
-    
-    </script>
-    
+</script>
 </body>
 
 </html>
