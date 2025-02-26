@@ -219,25 +219,8 @@
     whatsappButton.addEventListener('click', function(e) {
       e.preventDefault(); // Evita el comportamiento por defecto
   
-      // Función de redirección a WhatsApp
-      function redirigir() {
-        window.location.href = 'https://wa.link/idb8qx'; // Sustituye 'tuNumero' por el número deseado
-      }
-  
-      // Verifica si gtag está disponible y envía el evento
-      if (typeof gtag === 'function') {
-        gtag('event', 'click', {
-          'event_category': 'Contacto',
-          'event_label': 'WhatsApp Sede Poblado Campestre Leandro GYM',
-          'event_callback': redirigir
-        });
-      } else {
-        // Si gtag no está disponible, redirige inmediatamente
-        redirigir();
-      }
-  
-      // Fallback en caso de que el callback no se dispare en un tiempo razonable
-      setTimeout(redirigir, 1000);
+      // Redirige a la URL de WhatsApp sin enviar información a gtag
+      window.location.href = 'https://wa.link/idb8qx';
     });
   </script>
   
