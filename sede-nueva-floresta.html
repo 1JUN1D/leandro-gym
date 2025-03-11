@@ -156,8 +156,8 @@
     <div id="viewer360">
       <div class="niveles">
         <p style="text-align: center; padding-left: 2px; padding-right: 2px; margin: 0; color: white;">PISO EN EL<br>QUE ESTAS</p>
-        <button id="btn-piso-1" class="nivel-boton" title="Primer Piso" onclick="changeFloor(1)">1</button>
-        <button id="btn-piso-2" class="nivel-boton activo" title="Segundo Piso" onclick="changeFloor(2)">2</button>
+        <button id="btn-piso-1" class="nivel-boton activo" title="Primer Piso" onclick="changeFloor(1)">1</button>
+        <button id="btn-piso-2" class="nivel-boton" title="Segundo Piso" onclick="changeFloor(2)">2</button>
         <button id="btn-piso-3" class="nivel-boton" title="Segundo Piso" onclick="changeFloor(3)">3</button>
         <button id="btn-piso-4" class="nivel-boton" title="Segundo Piso" onclick="changeFloor(4)">4</button>
       </div>
@@ -727,7 +727,7 @@
     ],
   };
 
-  let currentFloor = 4;
+  let currentFloor = 1;
   const viewer = new Viewer({
     container: document.querySelector('#viewer360'),
     loadingImg: '../cusig2.gif',
